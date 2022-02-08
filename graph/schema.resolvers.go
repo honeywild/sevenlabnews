@@ -9,6 +9,8 @@ import (
 
 	"github.com/honeywild/sevenlabnews/graph/generated"
 	"github.com/honeywild/sevenlabnews/graph/model"
+	"github.com/honeywild/sevenlabnews/graph/users"
+	"github.com/honeywild/sevenlabnews/internal/links"
 )
 
 func (r *mutationResolver) CreateLink(ctx context.Context, input model.NewLink) (*model.Link, error) {

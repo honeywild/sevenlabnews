@@ -2,7 +2,7 @@ package links
 
 import (
 	database "github.com/honeywild/sevenlabnews/internal/pkg/db/mysql"
-	"github.com/sevenlabnews/sevenlabnews/internal/users"
+	"github.com/honeywild/sevenlabnews/internal/users"
 	"log"
 )
 
