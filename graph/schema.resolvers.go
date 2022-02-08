@@ -6,24 +6,32 @@ package graph
 import (
 	"context"
 	"fmt"
-
 	"github.com/honeywild/sevenlabnews/graph/generated"
 	"github.com/honeywild/sevenlabnews/graph/model"
-	"github.com/honeywild/sevenlabnews/graph/users"
 	"github.com/honeywild/sevenlabnews/internal/links"
+	/// "internal/links"
+	"strconv"
 )
 
 func (r *mutationResolver) CreateLink(ctx context.Context, input model.NewLink) (*model.Link, error) {
-	var link model.Link
+	var link links.Link
 	link.Address = input.Address
 	link.Title = input.Title
 	linkID := link.Save()
-	return &model.Link{ID: strconv.FormatInt(LinkID, 10), Title: link.Title, Address.link.Address}, nil
-
+	//	return &model.Link{ID: strconv.FormatInt(LinkID, 10), Title: link.Title, Address.link.Address}, nil
+	return &model.Link{ID: strconv.FormatInt(linkID, 10), Title: link.Title, Address: link.Address}, nil
 }
 
 func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUser) (string, error) {
-	panic(fmt.Errorf("not implemented"))
+	var user users.User
+	user.Username = input.Username
+	user.Password = input.Password
+	user.Create()
+	token, err := jwt.GenerateToken(user.Username)
+	if err != nil {
+		return "", err
+	}
+	return token, nil
 }
 
 func (r *mutationResolver) Login(ctx context.Context, input model.Login) (string, error) {
@@ -35,15 +43,16 @@ func (r *mutationResolver) RefreshToken(ctx context.Context, input model.Refresh
 }
 
 func (r *queryResolver) Links(ctx context.Context) ([]*model.Link, error) {
-	var links []*model.Link
-	dummyLink := model.Link{
-		Title:   "sevenlab news",
-		Address: "https://sevenlab.xyz",
-		User:    &model.User{Name: "admin"},
+	var resultLinks []*model.Link
+	var dbLinks []links.Link
+	dbLinks = links.GetAll()
+
+	for _, link := range dbLinks {
+		resultLinks = append(resultLinks, &model.Link{ID: link.ID, Title: link.Title, Address: link.Address})
 	}
 
-	links = append(links, &dummyLink)
-	return links, nil
+	return resultLinks, nil
+
 }
 
 // Mutation returns generated.MutationResolver implementation.
