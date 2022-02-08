@@ -1,8 +1,8 @@
 package links
 
 import (
-	database "github.com/glyphack/go-graphql-hackernews/internal/pkg/db/mysql"
-	"github.com/glyphack/go-graphql-hackernews/internal/users"
+	database "github.com/honeywild/sevenlabnews/internal/pkg/db/mysql"
+	"github.com/sevenlabnews/sevenlabnews/internal/users"
 	"log"
 )
 
