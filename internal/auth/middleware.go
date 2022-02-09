@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/honeywild/sevenlabnews/internal/pkg/jwt"
 	"github.com/honeywild/sevenlabnews/internal/users"
-	"github.com/honeywild/sevenlabnews/pkg/jwt"
 )
 
 var userCtxKey = &contextKey{"user"}
